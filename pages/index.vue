@@ -1,6 +1,6 @@
 <template>
   <TopBar />
-  <h1 class="title">teste</h1>
+  <EntrySection />
 </template>
 
 <script lang="ts" setup>
