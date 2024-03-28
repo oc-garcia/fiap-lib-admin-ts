@@ -1,6 +1,7 @@
 <template>
   <TopBar />
   <EntrySection />
+  <BookTable />
 </template>
 
 <script lang="ts" setup>
