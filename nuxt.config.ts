@@ -11,4 +11,12 @@ export default defineNuxtConfig({
     },
   },
   css: ["@/assets/styles.css"],
+  modules: [
+    [
+      "@vee-validate/nuxt",
+      {
+        autoImports: true,
+      },
+    ],
+  ],
 });
