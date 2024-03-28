@@ -29,29 +29,54 @@
         </tbody>
       </table>
     </div>
+    <div v-else>
+      <h2 class="subtitle">Nenhum livro cadastrado</h2>
+    </div>
   </section>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted, computed } from "vue";
+import axios from "axios";
 import { type Book } from "../interfaces/book";
 
 const booksData = ref<Book[]>([]);
 
+const props = defineProps({
+  refresh: Number,
+});
+
 const books = computed(() => booksData.value);
 
-onMounted(async () => {
-  const { data } = await useFetch("/api/getBooks");
-  booksData.value = data as unknown as Book[];
+const fetchBooks = async () => {
+  const response = await axios.get("/api/getBooks");
+  booksData.value = response.data as Book[];
+};
+
+onMounted(() => {
+  fetchBooks;
 });
-console.log(books.value);
+
+watch(() => props.refresh, fetchBooks);
 
 const handleEdit = (id: number) => {
   console.log(`Edit book with id: ${id}`);
 };
 
-const handleDelete = (id: number) => {
-  console.log(`Delete book with id: ${id}`);
+const handleDelete = async (id: number) => {
+  try {
+    await axios.delete("/api/deleteBook", {
+      data: {
+        id: id,
+      },
+    });
+    booksData.value = booksData.value.filter((book) => book.id !== id);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    const response = await axios.get("/api/getBooks");
+    booksData.value = response.data as Book[];
+  }
 };
 </script>
 

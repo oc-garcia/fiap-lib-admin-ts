@@ -33,6 +33,8 @@
 <script lang="ts" setup>
 import NewBookForm from "./NewBookForm.vue";
 
+const emit = defineEmits(["saved"]);
+
 const showModal: Ref<boolean> = ref(false);
 const showSuccessMessage: Ref<boolean> = ref(false);
 
@@ -43,6 +45,7 @@ const toggleModal = (): void => {
 const handleSave = () => {
   toggleModal();
   showSuccessMessage.value = true;
+  emit("saved");
   setTimeout(() => {
     showSuccessMessage.value = false;
   }, 3000);
