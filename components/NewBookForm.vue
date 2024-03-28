@@ -48,8 +48,8 @@ import { v4 as uuidv4 } from "uuid";
 const emit = defineEmits(["cancel", "saved"]);
 
 const book = ref({
-  id: uuidv4(),
   title: "",
+  id: uuidv4(),
   author: "",
   isbn: "",
   year: 0,
