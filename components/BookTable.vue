@@ -21,10 +21,10 @@
           <td>{{ book.year }}</td>
           <td>{{ book.publisher }}</td>
           <td>
-            <button class="button is-warning">Editar</button>
+            <button class="button is-warning" @click="handleEdit(book.id)">Editar</button>
           </td>
           <td>
-            <button class="button is-danger">Excluir</button>
+            <button class="button is-danger" @click="handleDelete(book.id)">Excluir</button>
           </td>
         </tr>
       </tbody>
@@ -54,6 +54,14 @@ const books = ref([
   },
   { id: 3, title: "Moby Dick", author: "Herman Melville", isbn: "9788573264496", year: 1851, publisher: "Editora 34" },
 ]);
+
+const handleEdit = (id: number) => {
+  console.log(`Edit book with id: ${id}`);
+};
+
+const handleDelete = (id: number) => {
+  console.log(`Delete book with id: ${id}`);
+};
 </script>
 
 <style></style>
