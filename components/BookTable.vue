@@ -9,8 +9,7 @@
           <th>ISBN</th>
           <th>Ano</th>
           <th>Editora</th>
-          <th>Editar</th>
-          <th>Excluir</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -22,9 +21,8 @@
           <td>{{ book.publisher }}</td>
           <td>
             <button class="button is-warning" @click="handleEdit(book.id)">Editar</button>
-          </td>
-          <td>
-            <button class="button is-danger" @click="handleDelete(book.id)">Excluir</button>
+
+            <button class="button is-danger ml-2" @click="handleDelete(book.id)">Excluir</button>
           </td>
         </tr>
       </tbody>
