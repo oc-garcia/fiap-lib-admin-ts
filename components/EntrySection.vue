@@ -4,6 +4,17 @@
       <button class="button is-link" @click="toggleModal">Cadastrar Livro</button>
     </div>
   </section>
+
+  <transition name="fade">
+    <article class="message is-success mt-2" v-if="showSuccessMessage">
+      <div class="message-header">
+        <p>Info</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">Salvo com sucesso!</div>
+    </article>
+  </transition>
+
   <div class="modal" :class="{ 'is-active': showModal }">
     <div class="modal-background" @click="toggleModal"></div>
     <div class="modal-card">
@@ -12,14 +23,9 @@
         <button class="delete" aria-label="close" @click="toggleModal"></button>
       </header>
       <section class="modal-card-body">
-        <NewBookForm />
+        <NewBookForm @cancel="toggleModal" @saved="handleSave" />
       </section>
-      <footer class="modal-card-foot">
-        <div class="buttons">
-          <button class="button is-success">Salvar</button>
-          <button class="button is-danger" @click="toggleModal">Cancelar</button>
-        </div>
-      </footer>
+      <footer class="modal-card-foot"></footer>
     </div>
   </div>
 </template>
@@ -28,10 +34,28 @@
 import NewBookForm from "./NewBookForm.vue";
 
 const showModal: Ref<boolean> = ref(false);
+const showSuccessMessage: Ref<boolean> = ref(false);
 
 const toggleModal = (): void => {
   showModal.value = !showModal.value;
 };
+
+const handleSave = () => {
+  toggleModal();
+  showSuccessMessage.value = true;
+  setTimeout(() => {
+    showSuccessMessage.value = false;
+  }, 3000);
+};
 </script>
 
-<style></style>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
