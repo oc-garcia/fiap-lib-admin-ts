@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.41.1",
     "@vee-validate/nuxt": "^4.12.6",
+    "@vee-validate/yup": "^4.12.6",
     "axios": "^1.6.8",
     "nuxt": "^3.11.1",
     "uuid": "^9.0.1",
