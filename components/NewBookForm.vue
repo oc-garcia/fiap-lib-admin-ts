@@ -48,10 +48,8 @@
 
 <script lang="ts" setup>
 import { type Book } from "../interfaces/book";
-import { v4 as uuidv4 } from "uuid";
 import * as yup from "yup";
-import { useForm } from "vee-validate";
-import { toTypedSchema } from "@vee-validate/yup";
+import BookServices from "~/services/BookServices";
 
 const emit = defineEmits(["cancel", "saved"]);
 
@@ -65,12 +63,8 @@ const schema = yup.object({
 
 const save = async (values: Book) => {
   try {
-    const response = await $fetch("api/postBook", {
-      method: "POST",
-      body: values,
-    });
+    BookServices.postBook(values);
     emit("saved");
-    console.log(response);
   } catch (error) {
     console.error(error);
   }

@@ -44,6 +44,7 @@
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { type Book } from "../interfaces/book";
+import BookServices from "../services/BookServices";
 
 const booksData = ref<Book[]>([]);
 const loading = ref(true);
@@ -52,13 +53,14 @@ const props = defineProps({
   refresh: Number,
 });
 
+const emit = defineEmits(["refresh"]);
+
 const books = computed(() => booksData.value);
 
-const fetchBooks = async () => {
+const getBooks = async () => {
   loading.value = true;
   try {
-    const response = await axios.get("/api/getBooks");
-    booksData.value = response.data as Book[];
+    booksData.value = await BookServices.getBooks();
   } catch (error) {
     console.error(error);
   } finally {
@@ -69,10 +71,10 @@ const fetchBooks = async () => {
 };
 
 onMounted(() => {
-  fetchBooks;
+  getBooks;
 });
 
-watch(() => props.refresh, fetchBooks);
+watch(() => props.refresh, getBooks);
 
 const handleEdit = (id: number) => {
   console.log(`Edit book with id: ${id}`);
@@ -80,17 +82,11 @@ const handleEdit = (id: number) => {
 
 const handleDelete = async (id: number) => {
   try {
-    await axios.delete("/api/deleteBook", {
-      data: {
-        id: id,
-      },
-    });
-    booksData.value = booksData.value.filter((book) => book.id !== id);
+    await BookServices.deleteBook(id);
   } catch (error) {
     console.error(error);
   } finally {
-    const response = await axios.get("/api/getBooks");
-    booksData.value = response.data as Book[];
+    getBooks();
   }
 };
 </script>

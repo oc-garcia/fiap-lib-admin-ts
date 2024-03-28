@@ -1,6 +1,6 @@
 <template>
   <TopBar />
-  <EntrySection @saved="handleSaved" />
+  <EntrySection @refresh="handleUpdate" />
   <BookTable :refresh="refreshKey" />
 </template>
 
@@ -10,10 +10,10 @@ import TopBar from "~/components/TopBar.vue";
 const refreshKey = ref(0);
 
 onMounted(() => {
-  handleSaved();
+  handleUpdate();
 });
 
-const handleSaved = () => {
+const handleUpdate = () => {
   refreshKey.value++;
 };
 </script>
