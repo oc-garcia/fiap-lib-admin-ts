@@ -31,6 +31,14 @@ const BookServices = {
       console.error(error);
     }
   },
+  patchBook: async (values: Book) => {
+    try {
+      const response = await axios.patch(`/api/patchBook`, values);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export default BookServices;

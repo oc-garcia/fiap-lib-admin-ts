@@ -23,7 +23,7 @@
         <button class="delete" aria-label="close" @click="toggleModal"></button>
       </header>
       <section class="modal-card-body">
-        <NewBookForm @cancel="toggleModal" @saved="handleSave" />
+        <NewBookForm v-if="showModal" @cancel="toggleModal" @saved="handleSave" />
       </section>
       <footer class="modal-card-foot"></footer>
     </div>
@@ -52,7 +52,7 @@ const handleSave = () => {
 };
 </script>
 
-<style>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;

@@ -1,5 +1,5 @@
 <template>
-  <Form :validation-schema="schema" @submit="onSubmit" v-slot="{ errors }">
+  <Form :validation-schema="schema" @submit="onSubmit" v-slot="{ errors }" :initial-values="book as Book">
     <div class="field">
       <label class="label">Título</label>
       <div class="control">
@@ -50,8 +50,24 @@
 import { type Book } from "../interfaces/book";
 import * as yup from "yup";
 import BookServices from "~/services/BookServices";
+import { BookClass } from "~/services/BookClass";
 
-const emit = defineEmits(["cancel", "saved"]);
+const props = defineProps({
+  book: {
+    type: Object as () => Book | null,
+    default: null,
+  },
+});
+
+watch(
+  () => props.book,
+  (newVal, oldVal) => {
+    console.log("book prop changed:", newVal);
+  },
+  { immediate: true }
+);
+
+const emit = defineEmits(["cancel", "saved", "edited"]);
 
 const schema = yup.object({
   title: yup.string().required("Campo Obrigatório"),
@@ -63,15 +79,21 @@ const schema = yup.object({
 
 const save = async (values: Book) => {
   try {
-    BookServices.postBook(values);
-    emit("saved");
+    if (props.book) {
+      await BookServices.patchBook(values);
+      emit("edited");
+    } else {
+      await BookServices.postBook(values);
+      emit("saved");
+    }
   } catch (error) {
     console.error(error);
   }
 };
 
 const onSubmit = (values: Book, { resetForm }: { resetForm: Function }) => {
-  save(values);
+  const newBook = new BookClass(values.title, values.author, values.isbn, values.year, values.publisher);
+  save(newBook as Book);
   resetForm();
 };
 </script>

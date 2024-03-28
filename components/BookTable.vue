@@ -1,4 +1,24 @@
 <template>
+  <transition name="fade">
+    <article class="message is-warning mt-2" v-if="showEditMessage">
+      <div class="message-header">
+        <p>Info</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">Editado com sucesso!</div>
+    </article>
+  </transition>
+
+  <transition name="fade">
+    <article class="message is-danger mt-2" v-if="showDeleteMessage">
+      <div class="message-header">
+        <p>Info</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">Deletado com sucesso!</div>
+    </article>
+  </transition>
+
   <section class="section">
     <div v-if="loading">
       <p>Loading...</p>
@@ -25,7 +45,7 @@
               <td>{{ book.year }}</td>
               <td>{{ book.publisher }}</td>
               <td>
-                <button class="button is-warning" @click="handleEdit(book.id)">Editar</button>
+                <button class="button is-warning" @click="handleEdit(book)">Editar</button>
 
                 <button class="button is-danger ml-2" @click="handleDelete(book.id)">Excluir</button>
               </td>
@@ -38,6 +58,25 @@
       </div>
     </div>
   </section>
+
+  <div class="modal" :class="{ 'is-active': showModal }">
+    <div class="modal-background" @click="toggleModal"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Cadastro de livro</p>
+        <button class="delete" aria-label="close" @click="toggleModal"></button>
+      </header>
+      <section class="modal-card-body">
+        <NewBookForm
+          v-if="showModal"
+          @cancel="toggleModal"
+          @saved="handleSave"
+          @edited="handleEdited"
+          :book="currentBook" />
+      </section>
+      <footer class="modal-card-foot"></footer>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -48,6 +87,10 @@ import BookServices from "../services/BookServices";
 
 const booksData = ref<Book[]>([]);
 const loading = ref(true);
+const showModal: Ref<boolean> = ref(false);
+const showEditMessage: Ref<boolean> = ref(false);
+const showDeleteMessage: Ref<boolean> = ref(false);
+const currentBook = ref<Book | null>(null);
 
 const props = defineProps({
   refresh: Number,
@@ -56,6 +99,10 @@ const props = defineProps({
 const emit = defineEmits(["refresh"]);
 
 const books = computed(() => booksData.value);
+
+const toggleModal = (): void => {
+  showModal.value = !showModal.value;
+};
 
 const getBooks = async () => {
   loading.value = true;
@@ -76,13 +123,27 @@ onMounted(() => {
 
 watch(() => props.refresh, getBooks);
 
-const handleEdit = (id: number) => {
-  console.log(`Edit book with id: ${id}`);
+const handleEdit = (book: Book) => {
+  currentBook.value = book;
+  toggleModal();
+};
+
+const handleEdited = () => {
+  toggleModal();
+  showEditMessage.value = true;
+  getBooks();
+  setTimeout(() => {
+    showEditMessage.value = false;
+  }, 3000);
 };
 
 const handleDelete = async (id: number) => {
   try {
     await BookServices.deleteBook(id);
+    showDeleteMessage.value = true;
+    setTimeout(() => {
+      showDeleteMessage.value = false;
+    }, 3000);
   } catch (error) {
     console.error(error);
   } finally {
@@ -91,4 +152,13 @@ const handleDelete = async (id: number) => {
 };
 </script>
 
-<style></style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
