@@ -78,13 +78,12 @@ const schema = yup.object({
 });
 
 const save = async (values: Book) => {
-  const newBook = new BookClass(values.title, values.author, values.isbn, values.year, values.publisher);
   try {
     if (props.book) {
-      await BookServices.patchBook(newBook as Book);
+      await BookServices.patchBook(values);
       emit("edited");
     } else {
-      await BookServices.postBook(newBook as Book);
+      await BookServices.postBook(values);
       emit("saved");
     }
   } catch (error) {
