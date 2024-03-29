@@ -106,6 +106,7 @@ const toggleModal = (): void => {
 };
 
 const getBooks = async () => {
+  booksData.value = [];
   loading.value = true;
   try {
     const response = await BookServices.getBooks();
