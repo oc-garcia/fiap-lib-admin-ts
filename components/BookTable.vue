@@ -84,6 +84,7 @@ import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { type Book } from "../interfaces/book";
 import BookServices from "../services/BookServices";
+import { BookClass } from "~/services/BookClass";
 
 const booksData = ref<Book[]>([]);
 const loading = ref(true);
@@ -107,7 +108,11 @@ const toggleModal = (): void => {
 const getBooks = async () => {
   loading.value = true;
   try {
-    booksData.value = await BookServices.getBooks();
+    const response = await BookServices.getBooks();
+    response.map((book) => {
+      let displayedBook: Book = new BookClass(book.id, book.title, book.author, book.isbn, book.year, book.publisher);
+      booksData.value.push(displayedBook);
+    });
   } catch (error) {
     console.error(error);
   } finally {
