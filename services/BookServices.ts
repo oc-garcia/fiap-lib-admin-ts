@@ -19,7 +19,7 @@ const BookServices = {
       console.error(error);
     }
   },
-  deleteBook: async (id: number) => {
+  deleteBook: async (id: string) => {
     try {
       const response = await axios.delete("/api/deleteBook", {
         data: {

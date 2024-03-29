@@ -76,9 +76,8 @@ const schema = yup.object({
   year: yup
     .number()
     .required("Campo Obrigatório")
-    .positive("O ano deve ser um número positivo")
     .integer("O ano deve ser um número inteiro")
-    .min(1900, "O ano deve ser maior ou igual a 1900")
+    .min(-3200, "O ano deve ser maior ou igual a 1900")
     .max(new Date().getFullYear(), "O ano deve ser menor ou igual ao ano atual"),
   publisher: yup.string().required("Campo Obrigatório"),
 });
