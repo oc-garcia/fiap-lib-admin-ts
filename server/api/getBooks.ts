@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   if (error) {
     console.error("Error: ", error);
-    return { body: "Error: " + JSON.stringify(error) };
+    return { body: error };
   } else {
     return data;
   }

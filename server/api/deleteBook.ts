@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   const { error } = await supabase.from("books").delete().eq("id", body.id);
   if (error) {
     console.error("Error: ", error);
-    return { body: "Error: " + JSON.stringify(error) };
+    return { body: error };
   } else {
     console.log("Book deleted: ", body);
     return { body: "Book deleted: " + JSON.stringify(body) };

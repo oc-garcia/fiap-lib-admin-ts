@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
   if (error) {
     console.error("Error: ", error);
-    return { body: "Error: " + JSON.stringify(error) };
+    return { body: error };
   } else {
     console.log("Book created: ", data);
     return { body: "Book created: " + JSON.stringify(data) };
