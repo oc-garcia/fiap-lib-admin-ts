@@ -22,6 +22,8 @@ The application is deployed and can be accessed at [https://fiap-lib-admin-ts.ve
 
 ## API Documentation
 
+**Base Url:** `https://fiap-lib-admin-ts.vercel.app/`
+
 ### Get Books
 
 **Endpoint:** `/api/getBooks`
