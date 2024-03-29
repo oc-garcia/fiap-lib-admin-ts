@@ -21,41 +21,46 @@
 
   <section class="section">
     <div v-if="loading">
-      <p>Loading...</p>
+      <transition name="fade">
+        <p>Loading...</p>
+      </transition>
     </div>
     <div v-else>
-      <div v-if="books && books.length">
-        <h2 class="subtitle">Livros Cadastrados</h2>
-        <table class="table is-fullwidth is-striped">
-          <thead>
-            <tr>
-              <th>Título</th>
-              <th>Autor</th>
-              <th>ISBN</th>
-              <th>Ano</th>
-              <th>Editora</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="book in books" :key="book.id">
-              <td>{{ book.title }}</td>
-              <td>{{ book.author }}</td>
-              <td>{{ book.isbn }}</td>
-              <td>{{ book.year > 0 ? `${book.year} d.C` : `${Math.abs(book.year)} a.C` }}</td>
-              <td>{{ book.publisher }}</td>
-              <td>
-                <button class="button is-warning" @click="handleEdit(book)">Editar</button>
+      <transition name="fade">
+        <div v-if="books && books.length">
+          <h2 class="subtitle">Livros Cadastrados</h2>
+          <table class="table is-fullwidth is-striped">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>ISBN</th>
+                <th>Ano</th>
+                <th>Editora</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="book in books" :key="book.id">
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.year > 0 ? `${book.year} d.C` : `${Math.abs(book.year)} a.C` }}</td>
+                <td>{{ book.publisher }}</td>
+                <td>
+                  <button class="button is-warning" @click="handleEdit(book)">Editar</button>
 
-                <button class="button is-danger ml-2" @click="handleDelete(book.id)">Excluir</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div v-else>
-        <h2 class="subtitle">Nenhum livro cadastrado</h2>
-      </div>
+                  <button class="button is-danger ml-2" @click="handleDelete(book.id)">Excluir</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div v-else>
+          <h2 class="subtitle">Nenhum livro cadastrado</h2>
+        </div>
+      </transition>
     </div>
   </section>
 
