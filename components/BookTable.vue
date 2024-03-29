@@ -1,25 +1,23 @@
 <template>
-  <section class="section">
-    <transition name="fade">
-      <article class="message is-warning mt-2" v-if="showEditMessage">
-        <div class="message-header">
-          <p>Info</p>
-          <button class="delete" aria-label="delete"></button>
-        </div>
-        <div class="message-body">Editado com sucesso!</div>
-      </article>
-    </transition>
+  <transition name="fade">
+    <article class="message is-warning mt-2" v-if="showEditMessage">
+      <div class="message-header">
+        <p>Info</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">Editado com sucesso!</div>
+    </article>
+  </transition>
 
-    <transition name="fade">
-      <article class="message is-danger mt-2" v-if="showDeleteMessage">
-        <div class="message-header">
-          <p>Info</p>
-          <button class="delete" aria-label="delete"></button>
-        </div>
-        <div class="message-body">Deletado com sucesso!</div>
-      </article>
-    </transition>
-  </section>
+  <transition name="fade">
+    <article class="message is-danger mt-2" v-if="showDeleteMessage">
+      <div class="message-header">
+        <p>Info</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">Deletado com sucesso!</div>
+    </article>
+  </transition>
 
   <section class="section">
     <div v-if="loading">
