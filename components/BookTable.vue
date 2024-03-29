@@ -42,7 +42,7 @@
               <td>{{ book.title }}</td>
               <td>{{ book.author }}</td>
               <td>{{ book.isbn }}</td>
-              <td>{{ book.year > 0 ? `${book.year} AC` : `${Math.abs(book.year)} DC` }}</td>
+              <td>{{ book.year > 0 ? `${book.year} d.C` : `${Math.abs(book.year)} a.C` }}</td>
               <td>{{ book.publisher }}</td>
               <td>
                 <button class="button is-warning" @click="handleEdit(book)">Editar</button>
