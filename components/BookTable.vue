@@ -75,7 +75,6 @@
         <NewBookForm
           v-if="showModal"
           @cancel="toggleModal"
-          @saved="handleSave"
           @edited="handleEdited"
           :book="currentBook" />
       </section>
