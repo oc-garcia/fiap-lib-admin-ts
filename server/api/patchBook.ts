@@ -5,11 +5,16 @@ import * as yup from "yup";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const schema = yup.object().shape({
-  id: yup.string().uuid().required(),
-  title: yup.string().required(),
-  author: yup.string().required(),
-  isbn: yup.string().required(),
-  year: yup.number().required().integer().min(1900).max(new Date().getFullYear()),
+  id: yup.string().uuid("Precisa ser um UUID").required("Campo Obrigatório"),
+  title: yup.string().required("Campo Obrigatório"),
+  author: yup.string().required("Campo Obrigatório"),
+  isbn: yup.string().required("Campo Obrigatório"),
+  year: yup
+    .number()
+    .required("Campo Obrigatório")
+    .integer("O ano deve ser um número inteiro")
+    .min(-3200, "O ano deve ser maior ou igual a -3200")
+    .max(new Date().getFullYear(), "O ano deve ser menor ou igual ao ano atual"),
   publisher: yup.string().required(),
 });
 

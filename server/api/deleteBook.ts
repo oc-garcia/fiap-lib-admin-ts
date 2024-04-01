@@ -5,7 +5,7 @@ import * as yup from "yup";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const schema = yup.object({
-  id: yup.string().uuid().required(),
+  id: yup.string().uuid("Precisa ser um UUID").required("Campo Obrigatório"),
   title: yup.string(),
   author: yup.string(),
   isbn: yup.string(),
