@@ -1,11 +1,31 @@
 import { createClient } from "@supabase/supabase-js";
+import { supabaseUrl, supabaseKey } from "../lib/supabase";
+import * as yup from "yup";
 
-const supabaseUrl: string = process.env.SUPABASE_URL as string;
-const supabaseKey: string = process.env.SUPABASE_KEY as string;
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+const schema = yup.object({
+  id: yup.string().uuid().required(),
+  title: yup.string(),
+  author: yup.string(),
+  isbn: yup.string(),
+  year: yup
+    .number()
+    .integer("O ano deve ser um número inteiro")
+    .min(-3200, "O ano deve ser maior ou igual a -3200")
+    .max(new Date().getFullYear(), "O ano deve ser menor ou igual ao ano atual"),
+  publisher: yup.string(),
+});
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
+
+  try {
+    await schema.validate(body);
+  } catch (error) {
+    console.error("Validation Error: ", error);
+    return { body: error };
+  }
 
   const { error } = await supabase.from("books").delete().eq("id", body.id);
   if (error) {
