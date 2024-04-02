@@ -29,32 +29,36 @@
       <transition name="fade">
         <div v-if="books && books.length">
           <h2 class="subtitle">Livros Cadastrados</h2>
-          <table class="table is-fullwidth is-striped">
-            <thead>
-              <tr>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>ISBN</th>
-                <th>Ano</th>
-                <th>Editora</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="book in books" :key="book.id">
-                <td>{{ book.title }}</td>
-                <td>{{ book.author }}</td>
-                <td>{{ book.isbn }}</td>
-                <td>{{ book.year > 0 ? `${book.year} d.C` : `${Math.abs(book.year)} a.C` }}</td>
-                <td>{{ book.publisher }}</td>
-                <td>
-                  <button class="button is-warning" @click="handleEdit(book)">Editar</button>
+          <div class="table-container">
+            <table class="table is-fullwidth is-striped">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>ISBN</th>
+                  <th>Ano</th>
+                  <th>Editora</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="book in books" :key="book.id">
+                  <td>{{ book.title }}</td>
+                  <td>{{ book.author }}</td>
+                  <td>{{ book.isbn }}</td>
+                  <td>{{ book.year > 0 ? `${book.year} d.C` : `${Math.abs(book.year)} a.C` }}</td>
+                  <td>{{ book.publisher }}</td>
+                  <td>
+                    <div class="btn-container">
+                      <button class="button is-warning" @click="handleEdit(book)">Editar</button>
 
-                  <button class="button is-danger ml-2" @click="handleDelete(book.id)">Excluir</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                      <button class="button is-danger" @click="handleDelete(book.id)">Excluir</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div v-else>
@@ -72,11 +76,7 @@
         <button class="delete" aria-label="close" @click="toggleModal"></button>
       </header>
       <section class="modal-card-body">
-        <NewBookForm
-          v-if="showModal"
-          @cancel="toggleModal"
-          @edited="handleEdited"
-          :book="currentBook" />
+        <NewBookForm v-if="showModal" @cancel="toggleModal" @edited="handleEdited" :book="currentBook" />
       </section>
       <footer class="modal-card-foot"></footer>
     </div>
@@ -163,6 +163,18 @@ const handleDelete = async (id: string) => {
 </script>
 
 <style scoped>
+.table-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
