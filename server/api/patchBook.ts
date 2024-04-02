@@ -1,8 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
-import { supabaseUrl, supabaseKey } from "../lib/supabase";
+import { supabase } from "../lib/supabase";
 import * as yup from "yup";
-
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 const schema = yup.object().shape({
   id: yup.string().uuid("Precisa ser um UUID").required("Campo Obrigatório"),

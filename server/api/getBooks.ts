@@ -1,7 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
-import { supabaseUrl, supabaseKey } from "../lib/supabase";
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from "../lib/supabase";
 
 export default defineEventHandler(async (event) => {
   let { data, error } = await supabase.from("books").select("*");
