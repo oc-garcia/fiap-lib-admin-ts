@@ -16,6 +16,19 @@ Development of the project using the latest version of TypeScript to ensure that
 
 Integration of the system with a database that can be NoSQL or SQL. In this scenario, you can use Docker or a free database like PostgreSQL on the Supabase platform.
 
+## Technologies Used
+
+This project was built using the following technologies:
+
+- [Nuxt.js](https://nuxtjs.org/): A Vue.js framework, used for building the front-end and back-end of the application.
+- [Vue.js](https://vuejs.org/): A progressive JavaScript framework for building user interfaces.
+- [Vue Router](https://router.vuejs.org/): The official router for Vue.js, used for routing in the application.
+- [Supabase](https://supabase.io/): An open source Firebase alternative, used for the database.
+- [Axios](https://axios-http.com/): A promise-based HTTP client for the browser and node.js, used for making HTTP requests.
+- [Vee-Validate](https://vee-validate.logaretm.com/): A template-based validation framework for Vue.js, used for form validation.
+- [Yup](https://github.com/jquense/yup): A JavaScript schema builder for value parsing and validation, used with Vee-Validate for form validation.
+- [Bulma](https://bulma.io/): A modern CSS framework based on Flexbox, used for styling the application.
+
 ## Deployment
 
 The application is deployed and can be accessed at [https://fiap-lib-admin-ts.vercel.app/](https://fiap-lib-admin-ts.vercel.app/)
