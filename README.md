@@ -33,6 +33,8 @@ This project was built using the following technologies:
 
 The application is deployed and can be accessed at [https://fiap-lib-admin-ts.vercel.app/](https://fiap-lib-admin-ts.vercel.app/)
 
+SUPABASE DB PAUSED!
+
 ## API Documentation
 
 **Base Url:** `https://fiap-lib-admin-ts.vercel.app/`
